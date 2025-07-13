@@ -49,8 +49,8 @@ export function AdaptedArticleCard({ article }: ArticleCardProps) {
 
     return (
         <Link href={`/blog/${article.slug}`}>
-            <div className="group relative h-full overflow-hidden rounded-2xl border border-zinc-100 bg-white transition duration-200 hover:shadow-xl">
-                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-tl-lg rounded-tr-lg bg-gray-100">
+            <div className="group relative h-full overflow-hidden rounded-2xl border border-zinc-800 bg-black transition duration-200 hover:shadow-xl hover:shadow-[#f4a443]/20">
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-tl-lg rounded-tr-lg bg-gray-900">
                     <Image
                         src={imageUrl}
                         fill
@@ -59,15 +59,15 @@ export function AdaptedArticleCard({ article }: ArticleCardProps) {
                     />
                 </div>
                 <div className="p-4">
-                    <h2 className="my-4 text-lg font-bold text-zinc-700">
+                    <h2 className="my-4 text-lg font-bold text-[#f4a443]">
                         {article.title}
                     </h2>
-                    <p className="my-4 text-sm font-normal text-zinc-500 h-20">
+                    <p className="my-4 text-sm font-normal text-zinc-400 h-20">
                         {description}
                     </p>
                     <div className="mt-10 flex flex-row items-center justify-between">
                         <span className="text-sm text-gray-500">{publishedDate}</span>
-                        <div className="relative z-10 block rounded-xl bg-black px-6 py-2 text-xs font-bold text-white">
+                        <div className="relative z-10 block rounded-xl bg-[#f4a443] px-6 py-2 text-xs font-bold text-black">
                             Read More
                         </div>
                     </div>

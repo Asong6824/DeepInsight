@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} bg-black`}>
         {/* 2. 将 Navbar 放在这里，位于所有页面内容(children)之上 */}
         <Navbar />
 

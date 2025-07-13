@@ -18,8 +18,8 @@ export const ArticleParallaxScroll = ({
                                       }: ArticleParallaxScrollProps) => {
     const gridRef = useRef<any>(null);
     const { scrollYProgress } = useScroll({
-        container: gridRef,
-        offset: ["start start", "end start"],
+        target: gridRef,
+        offset: ["start end", "end start"],
     });
 
     // 动画转换逻辑保持不变
@@ -35,7 +35,7 @@ export const ArticleParallaxScroll = ({
 
     return (
         <div
-            className={cn("h-[40rem] items-start overflow-y-auto w-full", className)}
+            className={cn("items-start w-full bg-[#f4a443]", className)}
             ref={gridRef}
         >
             <div

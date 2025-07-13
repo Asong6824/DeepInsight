@@ -1,10 +1,11 @@
 // app/page.tsx
-import { getArticles } from '@/lib/strapi';
+import { fetchArticles } from '@/lib/strapi';
 import { ArticleParallaxScroll } from '@/components/ArticleParallaxScroll'; // 导入我们改造后的组件
+import HeroSection from '@/components/HeroSection';
 
 export default async function HomePage() {
   // 1. 获取文章数据，这部分不变
-  const articles = await getArticles();
+  const articles = await fetchArticles();
 
   // 如果没有文章，显示提示信息
   if (!articles || articles.length === 0) {
@@ -17,5 +18,10 @@ export default async function HomePage() {
   }
 
   // 2. 将获取到的文章数据直接传递给我们的新组件
-  return <ArticleParallaxScroll articles={articles} />;
+  return (
+    <>
+      <HeroSection />
+      <ArticleParallaxScroll articles={articles} />
+    </>
+  );
 }

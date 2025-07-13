@@ -3,10 +3,9 @@
 import type { Article } from '@/lib/types';
 
 export async function getArticleBySlug(slug: string): Promise<Article[] | null> {
-    const strapiUrl = process.env.STRAPI_API_URL || 'http://127.0.0.1:1337';
+    const strapiUrl = process.env.STRAPI_API_URL || 'http://127.0.0.1:8888';
     const apiUrl = new URL('/api/articles', strapiUrl);
     apiUrl.searchParams.append('filters[slug][$eq]', slug);
-    apiUrl.searchParams.append('populate', 'featureImage');
 
     try {
         const response = await fetch(apiUrl.toString(), { cache: 'no-store' });
@@ -30,15 +29,16 @@ export async function getArticleBySlug(slug: string): Promise<Article[] | null> 
  * 获取所有已发布的文章列表，按发布日期倒序排列
  * @returns 返回文章数组
  */
-export async function getArticles(): Promise<Article[]> {
-    const strapiUrl = process.env.STRAPI_API_URL || 'http://127.0.0.1:1337';
+export async function fetchArticles({ query }: { query?: string } = {}): Promise<Article[]> {
+    const strapiUrl = process.env.STRAPI_API_URL || 'http://127.0.0.1:8888';
     const apiUrl = new URL('/api/articles', strapiUrl);
 
-    // --- 最终修正 ---
-    // 我们只保留 sort 参数，因为 featureImage 已经是文本字段，不再需要 populate
     apiUrl.searchParams.append('sort', 'publishedAt:desc');
-    // apiUrl.searchParams.append('populate', 'featureImage'); // <-- 删除或注释掉这一行
-    // ----------------
+
+    if (query) {
+        apiUrl.searchParams.append('filters[$or][0][title][$containsi]', query);
+        apiUrl.searchParams.append('filters[$or][1][content][$containsi]', query);
+    }
 
     try {
         const response = await fetch(apiUrl.toString(), { cache: 'no-store' });
@@ -47,7 +47,6 @@ export async function getArticles(): Promise<Article[]> {
             return [];
         }
         const result = await response.json();
-        // 现在返回的数据中，featureImage 将直接是一个 URL 字符串 (如果内容已填写)
         return result.data;
     } catch (error) {
         console.error(`[strapi.ts] 获取文章列表时发生错误:`, error);
